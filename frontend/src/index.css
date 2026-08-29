@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* Tailwind v4 defaults dark: to the OS color-scheme media query. This app toggles dark mode
+   manually via a class on <html> (the eye icon), so re-point the dark: variant at that class —
+   otherwise any dark: utility in the codebase would silently only work on OS dark mode and do
+   nothing when the in-app toggle is used. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --font-sans: var(--app-font-sans);
+  --font-display: var(--app-font-display);
+  --radius-lg: var(--radius);
+}
+
+:root {
+  --background: 150 30% 97%;
+  --foreground: 152 40% 14%;
+  --border: 150 24% 87%;
+  --input: 150 24% 83%;
+  --ring: 152 70% 38%;
+  --card: 0 0% 100%;
+  --card-foreground: 152 40% 14%;
+  --primary: 152 65% 32%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 150 40% 94%;
+  --secondary-foreground: 152 55% 20%;
+  --muted: 150 22% 94%;
+  --muted-foreground: 152 15% 42%;
+  --accent: 172 70% 36%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 2 72% 52%;
+  --destructive-foreground: 0 0% 100%;
+  --sidebar: 150 45% 99%;
+  --sidebar-foreground: 152 45% 16%;
+  --sidebar-border: 150 24% 89%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 152 40% 14%;
+  --radius: 0.7rem;
+  --app-font-sans: 'DM Sans', sans-serif;
+  --app-font-display: 'Space Grotesk', sans-serif;
+}
+
+.dark {
+  --background: 155 20% 15%;
+  --foreground: 150 20% 92%;
+  --border: 155 15% 28%;
+  --input: 155 15% 30%;
+  --card: 155 19% 19%;
+  --card-foreground: 150 20% 92%;
+  --primary: 152 55% 46%;
+  --primary-foreground: 152 30% 12%;
+  --secondary: 155 17% 26%;
+  --secondary-foreground: 150 20% 92%;
+  --muted: 155 17% 24%;
+  --muted-foreground: 150 12% 68%;
+  --accent: 172 48% 42%;
+  --accent-foreground: 152 30% 12%;
+  --sidebar: 155 22% 18%;
+  --sidebar-foreground: 150 20% 92%;
+  --sidebar-border: 155 15% 27%;
+  --popover: 155 19% 19%;
+  --popover-foreground: 150 20% 92%;
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body { @apply font-sans antialiased bg-background text-foreground; margin: 0; overscroll-behavior-y: none; }
+  button, input, select, textarea { font: inherit; }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--app-font-display); }
+  .page-shell { min-height: 100dvh; }
+}
+
+.app-shell { min-height: 100dvh; background: radial-gradient(circle at 100% 0%, hsl(152 70% 92% / .55), transparent 34rem), hsl(var(--background)); }
+.app-sidebar { background: hsl(var(--sidebar)); color: hsl(var(--sidebar-foreground)); border-right: 1px solid hsl(var(--sidebar-border)); box-shadow: 2px 0 10px hsl(152 30% 60% / .05); }
+.content-grid { display:grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 1rem; }
+.span-2 { grid-column: span 2 / span 2; }
+.span-3 { grid-column: span 3 / span 3; }.span-4 { grid-column: span 4 / span 4; }.span-5 { grid-column: span 5 / span 5; }.span-6 { grid-column: span 6 / span 6; }.span-7 { grid-column: span 7 / span 7; }.span-8 { grid-column: span 8 / span 8; }.span-12 { grid-column: span 12 / span 12; }
+.data-card { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); box-shadow: 0 2px 8px rgba(16,80,50,.05); border-radius: var(--radius); transition: border-color .2s, box-shadow .2s, transform .2s; }
+.data-card:hover { border-color: hsl(152 40% 70%); box-shadow: 0 8px 24px rgba(16,80,50,.08); }
+.table-wrap { overflow-x: auto; }
+.data-table { width:100%; border-collapse:collapse; min-width:680px; }
+.data-table th, .data-table td { text-align:center; }
+.data-table th { font-size:.7rem; text-transform:uppercase; letter-spacing:.07em; color:hsl(var(--muted-foreground)); padding:.78rem 1rem; background:hsl(var(--muted)); font-weight:700; white-space:nowrap; }
+.data-table td { padding:.9rem 1rem; border-top:1px solid hsl(var(--border)); font-size:.84rem; vertical-align:middle; }
+/* Every header must sit centered above its own centered data, on every page — no column keeps a
+   leftover left/right lean, and no header is ever misaligned from the values printed beneath it. */
+.data-table th.text-right, .data-table td.text-right,
+.data-table th.text-left, .data-table td.text-left { text-align:center; }
+.data-table td > .flex.justify-end, .data-table td > .flex.justify-start { justify-content:center; }
+.data-table tr:hover td { background: hsl(150 45% 97%); }
+.input-field { width:100%; border:1px solid hsl(var(--input)); border-radius:.55rem; background:hsl(var(--card)); padding:.63rem .75rem; color:hsl(var(--foreground)); outline:none; transition:border-color .18s, box-shadow .18s; }
+.input-field:focus { border-color:hsl(var(--primary)); box-shadow:0 0 0 3px hsl(var(--primary)/.12); }
+/* Search inputs pair .input-field with an absolutely-positioned icon + a Tailwind pl-* utility.
+   Because @import 'tailwindcss' emits utilities inside a CSS cascade layer, this plain (unlayered)
+   rule for .input-field would otherwise always win over pl-9 and the icon would sit on top of the
+   typed text. This explicit, higher-specificity override restores the left padding so the icon and
+   text never overlap, on every page that uses this pattern. */
+.input-field.pl-9 { padding-left: 2.25rem !important; }
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:.45rem; border-radius:.52rem; padding:.62rem .88rem; font-size:.82rem; font-weight:700; transition:transform .18s, background-color .18s, opacity .18s; cursor:pointer; }
+.btn:active { transform:translateY(1px); }.btn-primary { background:hsl(var(--primary)); color:hsl(var(--primary-foreground)); }.btn-primary:hover { background:hsl(152 65% 26%); }
+.btn-secondary { background:hsl(var(--secondary)); color:hsl(var(--secondary-foreground)); }.btn-secondary:hover { background:hsl(150 40% 88%); }
+.btn-ghost { color:hsl(var(--muted-foreground)); }.btn-ghost:hover { background:hsl(var(--muted)); color:hsl(var(--foreground)); }
+.btn-danger { color:hsl(var(--destructive)); }.btn-danger:hover { background:hsl(var(--destructive)/.08); }
+.kicker { display:inline-flex; align-items:center; color:hsl(158 60% 24%); text-transform:uppercase; font-size:.68rem; font-weight:800; letter-spacing:.12em; background:hsl(158 55% 94%); border:1px solid hsl(158 45% 82%); padding:.3rem .7rem; border-radius:999px; }
+.metric-value { font-family:var(--app-font-display); font-size:1.45rem; font-weight:700; color:hsl(var(--foreground)); letter-spacing:-.03em; }
+.status { display:inline-flex; align-items:center; gap:.38rem; border-radius:999px; padding:.28rem .65rem .28rem .55rem; font-size:.68rem; font-weight:700; line-height:1; white-space:nowrap; border:1px solid transparent; }
+.status::before { content:""; width:.38rem; height:.38rem; border-radius:999px; background:currentColor; flex-shrink:0; }
+.status-good { background:hsl(158 47% 93%); color:hsl(158 60% 26%); border-color:hsl(158 47% 82%); }.status-low { background:hsl(39 92% 93%); color:hsl(30 77% 32%); border-color:hsl(39 80% 82%); }.status-out { background:hsl(2 80% 95%); color:hsl(2 66% 37%); border-color:hsl(2 70% 85%); }.status-info { background:hsl(175 60% 90%); color:hsl(175 65% 26%); border-color:hsl(175 45% 75%); }
+html.dark .status-good { background:hsl(158 45% 16%); color:hsl(158 65% 68%); border-color:hsl(158 40% 28%); }
+html.dark .status-low { background:hsl(39 55% 16%); color:hsl(39 90% 68%); border-color:hsl(39 50% 28%); }
+html.dark .status-out { background:hsl(2 50% 18%); color:hsl(2 85% 72%); border-color:hsl(2 45% 30%); }
+html.dark .status-info { background:hsl(175 45% 16%); color:hsl(175 85% 68%); border-color:hsl(175 40% 28%); }
+html.dark .kicker { color:hsl(158 75% 78%); background:hsl(158 35% 18%); border-color:hsl(158 35% 30%); }
+.drawer-panel { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: hsl(152 50% 34% / .65) transparent; }
+html, body, .drawer-panel, .table-wrap { -ms-overflow-style: none; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(150 16% 78%); border-radius: 999px; }
+.drawer-panel::-webkit-scrollbar-thumb { background: hsl(152 50% 34% / .65); }
+.sidebar-link { display:flex; align-items:center; gap:.72rem; padding:.66rem .82rem; border-radius:.52rem; color:hsl(var(--sidebar-foreground)/.82); font-size:.8rem; font-weight:600; transition:background-color .18s,color .18s,transform .18s; }
+.sidebar-link:hover { transform: translateX(2px); }
+.sidebar-link:hover,.sidebar-link.active { background:hsl(150 55% 93%); color:hsl(152 60% 20%); }.sidebar-link.active { box-shadow:inset 3px 0 hsl(172 75% 40%); font-weight:700; }
+.reveal { animation:reveal .38s ease both; }.reveal-2 { animation-delay:.05s; }.reveal-3 { animation-delay:.1s; }
+@keyframes reveal { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+@media (max-width: 900px) { .span-2,.span-3,.span-4,.span-5,.span-6,.span-7,.span-8 { grid-column:span 12 / span 12; } }
+@media (max-width: 767px) { .desktop-sidebar { display:none; } .mobile-content { padding:1rem; } .data-table { min-width:620px; } .metric-value { font-size:1.25rem; } }
+
+/* ============================================================================
+   DARK MODE
+   The whole app is themed off the CSS variables above (--background, --card,
+   --foreground, etc.) and already flips correctly wherever a component uses
+   hsl(var(--...)). What does NOT flip automatically are the hardcoded Tailwind
+   utility colors used throughout (bg-white, text-slate-700, bg-emerald-50, ...).
+   This block remaps every such utility class, scoped under html.dark, to a
+   dark-mode-appropriate equivalent so nothing goes invisible, low-contrast, or
+   stays "stuck" on a light-mode color. Toggled by adding/removing the "dark"
+   class on <html> (see the eye icon in the header). */
+html.dark { color-scheme: dark; }
+html.dark body { background: hsl(var(--background)); }
+html.dark .app-shell { background: radial-gradient(circle at 100% 0%, hsl(152 45% 26% / .25), transparent 34rem), radial-gradient(circle at 0% 100%, hsl(172 40% 24% / .15), transparent 30rem), hsl(var(--background)); }
+
+/* Sidebar: soft "light-dark" charcoal-green panel, not a black rail — separated from the
+   content area with a subtle border rather than a heavy black gradient. */
+html.dark .app-sidebar { background: hsl(var(--sidebar)); border-right: 1px solid hsl(var(--sidebar-border)); box-shadow: none; }
+html.dark .sidebar-link:hover,
+html.dark .sidebar-link.active { background: hsl(152 30% 28%); box-shadow: inset 3px 0 hsl(172 70% 48%); color: hsl(150 25% 96%); }
+
+/* Cards: slightly stronger border + ambient shadow so surfaces separate from the background */
+html.dark .data-card { box-shadow: 0 1px 0 hsl(0 0% 100% / .03) inset, 0 8px 20px hsl(155 25% 5% / .25); border-color: hsl(155 15% 28%); }
+html.dark .data-card:hover { border-color: hsl(152 35% 42%); box-shadow: 0 1px 0 hsl(0 0% 100% / .03) inset, 0 10px 24px hsl(155 25% 5% / .3); }
+html.dark .metric-value { color: hsl(150 22% 94%); }
+html.dark .btn-primary { box-shadow: 0 4px 14px hsl(152 55% 40% / .22); }
+html.dark .btn-secondary:hover { background: hsl(155 17% 32%); }
+
+/* Header / surfaces that were hardcoded to white */
+html.dark .bg-white\/95 { background: hsl(155 19% 18% / .95); }
+html.dark .bg-white { background: hsl(var(--card)); }
+
+/* Neutral text scale -> light-on-dark equivalents, brightest for the darkest source shade */
+html.dark .text-slate-900 { color: hsl(150 22% 94%); }
+html.dark .text-slate-800 { color: hsl(150 20% 90%); }
+html.dark .text-slate-700 { color: hsl(150 16% 82%); }
+html.dark .text-slate-600 { color: hsl(150 12% 70%); }
+html.dark .text-slate-500 { color: hsl(150 10% 60%); }
+html.dark .text-slate-400 { color: hsl(150 8% 52%); }
+html.dark .text-slate-300 { color: hsl(150 8% 45%); }
+
+/* Neutral surfaces / borders */
+html.dark .bg-slate-50,
+html.dark .bg-slate-50\/70,
+html.dark .bg-slate-100 { background: hsl(155 16% 24%); }
+html.dark .border-slate-100,
+html.dark .border-slate-200 { border-color: hsl(155 15% 29%); }
+html.dark .bg-slate-200 { background: hsl(155 15% 29%); }
+html.dark .border-dashed.border-slate-200 { border-color: hsl(155 15% 32%); }
+html.dark .divide-y > * + * { border-color: hsl(155 15% 29%); }
+html.dark .hover\:bg-slate-100:hover { background: hsl(155 16% 26%); }
+html.dark .bg-slate-900 { background: hsl(155 24% 14%); }
+html.dark .bg-slate-950\/35,
+html.dark .bg-slate-950\/30 { background: hsl(155 25% 6% / .5); }
+html.dark .bg-slate-200 { background: hsl(155 15% 29%); }
+html.dark .text-slate-200 { color: hsl(155 15% 29%); }
+
+/* Green accents used as tinted chips / callouts / progress track */
+html.dark .bg-emerald-50 { background: hsl(152 35% 22%); }
+html.dark .bg-emerald-200 { background: hsl(152 35% 32%); }
+html.dark .text-emerald-700 { color: hsl(152 60% 68%); }
+html.dark .text-emerald-800 { color: hsl(152 60% 76%); }
+html.dark .text-emerald-900 { color: hsl(152 60% 84%); }
+html.dark .text-emerald-950 { color: hsl(150 22% 94%); }
+html.dark .border-emerald-600,
+html.dark .border-emerald-700 { border-color: hsl(152 55% 50%); }
+
+/* Teal (formerly cyan) / amber / red tinted chips */
+html.dark .bg-teal-50 { background: hsl(172 35% 20%); }
+html.dark .text-teal-700,
+html.dark .text-teal-800 { color: hsl(172 70% 66%); }
+html.dark .bg-amber-50 { background: hsl(39 45% 22%); }
+html.dark .text-amber-700,
+html.dark .text-amber-800 { color: hsl(39 85% 70%); }
+html.dark .bg-red-50 { background: hsl(2 45% 24%); }
+html.dark .hover\:bg-red-50:hover { background: hsl(2 45% 24%); }
+html.dark .text-red-700 { color: hsl(2 75% 74%); }
+
+/* Table row hover (was hardcoded to a light hsl literal) */
+html.dark .data-table tr:hover td { background: hsl(155 16% 22%); }
+html.dark .data-table th { background: hsl(155 17% 21%); }
+html.dark ::-webkit-scrollbar-thumb { background: hsl(155 13% 34%); }
+
+/* Popovers / calendar / dropdowns from shadcn-style primitives use bg-popover,
+   backed by the --popover / --popover-foreground variables defined above for
+   both :root and .dark, so notification, calendar and dropdown panels get a
+   solid, readable background in both themes instead of staying transparent. */
